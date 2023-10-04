@@ -65,6 +65,10 @@ public class Grupo {
         this.materias = materias;
     }
 
+    public static int getPromedioEscuela() {
+        return promedioEscuela;
+    }
+
     public static void actualizarPromedioEscuela(float a, float b){
         promedioEscuela-=(a/numGrupos);
         promedioEscuela+=(b/numGrupos);
