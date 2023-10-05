@@ -248,7 +248,22 @@ public class Grupo {
     }
 
     public String toString(){
-        return "";
+        StringBuilder str=new StringBuilder(1000);
+        str.append("Identificador Grupo: " +getIdentificadorGrupo()+"\n");
+        str.append("Materias: \n");
+        for (Asignatura asignatura:getMaterias()){
+            str.append(asignatura.getNombreAsignatura()+"\n");
+            str.append("Clave: "+asignatura.getClaveAsignaturas()+'\n');
+            if(asignatura.getTemas()!=null){
+                str.append("Temas: "+asignatura.getTemas()+"\n");
+            }
+            str.append("Calificaciones: \n");
+            for (int j=0;j<getNumAlumnos();j++){
+                System.out.println(getListaAlumno().get(j)+": "+ asignatura.getCalificaciones().get(j)+"\n");
+            }
+            str.append("\nPromedio general de la asignatura: "+ asignatura.getPromedioAsignatura()+"\n");
+        }
+        str.append("\nPromedio general del grupo: "+ getPromedioGrupo());
+        return str.toString();
     }
-    
 }

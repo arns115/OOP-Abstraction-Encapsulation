@@ -21,28 +21,28 @@ public class Alumno {
     
     //metodos
     public String getNombre(){
-        return this.nombre + " " + this.apellido;
+        return nombre + " " + apellido;
     }
     public int getEdad(){
-        return this.Edad;
+        return Edad;
     }
     public void setEdad(int edad) {
         Edad = edad;
     }
     public float getPromedio(){
-        return this.Promedio;
+        return Promedio;
     }
     public void setPromedio(float promedio) {
         Promedio = promedio;
     }
-    public int getNumeroAlumnosTotales(){
+    public static int getNumeroAlumnosTotales(){
         return AlumnosTotales;
     }
     public void setNumeroLista(int numeroDeLista){
         this.numeroDeLista = numeroDeLista;
     }
     public int getNumeroLista(){
-        return this.numeroDeLista;
+        return numeroDeLista;
     }
 
 
@@ -62,7 +62,6 @@ public class Alumno {
         return alumno;
     }
 
-
     public void modificarAlumno(){
         Scanner sc=new Scanner(System.in);
         int op, edad;
@@ -72,5 +71,9 @@ public class Alumno {
         if(op==1){
             setEdad(getEdad()+1);
         }
+    }
+
+    public String toString(){
+        return "Numero de lista: "+getNumeroLista()+"->Nombre: "+getNombre();
     }
 }

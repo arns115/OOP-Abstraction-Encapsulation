@@ -10,7 +10,7 @@ public class Asignatura {
     private String temas;
     private int claveAsignatura;
     private float promedioAsignatura;
-    static int numAsignaturas;
+    private static int numAsignaturas;
      
     public Asignatura(String nombreAsignatura, Profesor profesor, int claveAsignatura){
         this.nombreAsignatura=nombreAsignatura;
@@ -43,7 +43,6 @@ public class Asignatura {
         return calificaciones;
     }
 
-
     public String getTemas() {
         return temas;
     }
@@ -66,6 +65,10 @@ public class Asignatura {
 
     public void setPromedioAsignatura(float promedioAsignatura) {
         this.promedioAsignatura = promedioAsignatura;
+    }
+
+    public static int getNumAsignaturas(){
+        return numAsignaturas;
     }
 
     public void actualizarPromedioAsignatura(){
