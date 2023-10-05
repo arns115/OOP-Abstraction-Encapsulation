@@ -124,12 +124,10 @@ public class Profesor {
     public void modificarProfesor(){
         float nuevaCalifAprobatoria;
         Scanner sc=new Scanner(System.in);
-        System.out.println("Ha cumplido anios el profesor? 1)SI 2)NO");
-        int cumpleanos=sc.nextInt();
+        System.out.println("Ingrese la edad del profesor");
+        int edad=sc.nextInt();
         sc.nextLine();
-        if(cumpleanos==1){
-            setEdad(getEdad()+1);
-        }
+        setEdad(edad);
         System.out.println("Desea cambiar su calificacion aprobatoria? 1)SI 2)NO");
         int a=sc.nextInt();
         sc.nextLine();
@@ -141,6 +139,9 @@ public class Profesor {
     }
 
     public String toString(){
-        return "Profesor: "+getNombre()+ " ->Calificacion aprobatoria: "+ getCalificacionAprobatoria();
+        String str="";
+        if(getEdad()!=0)
+            str=" ->Edad: "+getEdad() + " ->";
+        return "Profesor: "+getNombre()+ str+" Calificacion aprobatoria: "+ getCalificacionAprobatoria();
     }
 }
