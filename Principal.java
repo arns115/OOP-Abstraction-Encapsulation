@@ -16,7 +16,7 @@ public class Principal {
             sc.nextLine();
             switch(op){
                 case 1:
-                    grupos.add(registrarGrupo());
+                    grupos.add(Grupo.registrarGrupo());
                     break;
                 case 2:
 
@@ -28,7 +28,7 @@ public class Principal {
                     }
                     break;
                 case 4:
-                
+
             }
         }
     }

@@ -1,5 +1,7 @@
 package alumno;
 
+import java.util.Scanner;
+
 public class Alumno {
     //Atributos
     private String nombre;
@@ -14,6 +16,7 @@ public class Alumno {
         this.nombre = nombre;
         this.apellido = apellido;
         this.Edad = Edad;
+        AlumnosTotales++;
     }
     
     //metodos
@@ -36,5 +39,19 @@ public class Alumno {
         return this.numeroDeLista;
     }
 
-    
+    public static Alumno registrarAlumno(){
+        Scanner sc =new Scanner(System.in);
+        int op=0;
+        String nombre, apellido;
+        int edad;
+        System.out.println("Ingrese el nombre del alumno");
+        nombre=sc.nextLine();
+        System.out.println("Ingrese el apellido del alumno");
+        apellido=sc.nextLine();
+        System.out.println("Ingrese la edad del alumno");
+        edad=sc.nextInt();
+        sc.nextLine();
+        Alumno alumno=new Alumno(nombre, apellido, edad);
+        return alumno;
+    }
 }

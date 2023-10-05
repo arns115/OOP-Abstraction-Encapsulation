@@ -20,37 +20,93 @@ public class Profesor {
         this.apellido = apellido;
         this.Edad = Edad;
         this.CalificacionAprobatoria = CalificacionAprobatoria;
+        numeroDeProfesores++;
+    }
+
+    public Profesor(String nombre, String apellido, float CalificacionAprobatoria){
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.CalificacionAprobatoria = CalificacionAprobatoria;
+        numeroDeProfesores++;
     }
 
     //metodos
     public String getNombre(){
-        return this.nombre + " " + this.apellido;
+        return nombre + " " + apellido;
     }
-    public float getCalificaiconAprobatoria(){
-        return this.CalificacionAprobatoria;
+    public float getCalificacionAprobatoria(){
+        return CalificacionAprobatoria;
     }
     public int getNumeroProfesores(){
         return numeroDeProfesores;
     }
 
-
-    public int AlumnosAprobados(ArrayList<Alumno> ListaDeAlumnos){
-        this.AlumnosAprobados = 0;
-        for(Alumno alumno : ListaDeAlumnos ){
-            if(alumno.getPromedio() >= this.CalificacionAprobatoria){
-                this.AlumnosAprobados ++;
-            }
-        }
-        return this.AlumnosAprobados;
-    }
-    public int AlumnosReprobados(ArrayList<Alumno> ListaDeAlumnos){
-        this.AlumnosReprobados = 0;
-        for(Alumno alumno : ListaDeAlumnos ){
-            if(alumno.getPromedio() < this.CalificacionAprobatoria){
-                this.AlumnosReprobados ++;
-            }
-        }
-        return this.AlumnosReprobados;
+    public int getAlumnosAprobados() {
+        return AlumnosAprobados;
     }
 
+    public void setAlumnosAprobados(int alumnosAprobados) {
+        AlumnosAprobados = alumnosAprobados;
+    }
+
+    public int getAlumnosReprobados() {
+        return AlumnosReprobados;
+    }
+
+    public void setAlumnosReprobados(int alumnosReprobados) {
+        AlumnosReprobados = alumnosReprobados;
+    }
+
+    public boolean aprobado(float calif){
+        return calif>=getCalificacionAprobatoria();
+    }
+
+    public int AlumnosAprobados(List<Float> calificaciones){
+        setAlumnosAprobados(0);
+        for(Float calificacion: calificaciones){
+            if(aprobado(calificacion)){
+                setAlumnosAprobados(getAlumnosAprobados()+1);
+            }
+        }
+        return getAlumnosAprobados();
+    }
+
+    public int AlumnosReprobados(List<Float> calificaciones){
+        setAlumnosReprobados(0);
+        for(Float calificacion: calificaciones){
+            if(aprobado(calificacion)==false){
+                setAlumnosReprobados(getAlumnosReprobados()+1);
+            }
+        }
+        return getAlumnosReprobados();
+    }
+
+    public static Profesor registrarProfesor(){
+        Scanner sc=new Scanner(System.in);
+        int op=0;
+        String nombre, apellido;
+        int edad, calificacionAprobatoria;
+        Profesor profesor;
+        System.out.println("Ingrese nombre del profesor");
+        nombre=sc.nextLine();
+        System.out.println("Ingrese apellido del profesor");
+        apellido=sc.nextLine();
+        System.out.println("Ingrese calificacion aprobatoria del profesor");
+        calificacionAprobatoria=sc.nextInt();
+        sc.nextLine();
+        System.out.println("Desea agregar la edad del profesor? 1)SI 2)NO");
+        op=sc.nextInt();
+        sc.nextLine();
+        if(op==1){
+            System.out.println("Ingrese edad del profesor");
+            edad=sc.nextInt();
+            sc.nextLine();
+            profesor=new Profesor(nombre, apellido, edad, calificacionAprobatoria);
+        }
+        else{
+            profesor =new Profesor(nombre, apellido, calificacionAprobatoria);
+        }
+        return profesor;
+    }
+     
 }

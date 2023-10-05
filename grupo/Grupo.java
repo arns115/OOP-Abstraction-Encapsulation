@@ -121,9 +121,51 @@ public class Grupo {
             i++;
         }
     }
+    
+    public static Grupo registrarGrupo(){
+        Scanner sc= new Scanner(System.in);
+        Grupo grupo;
+        int op=0, op1=0, op2=0;
+        String id;
+        System.out.println("Ingrese el identificador del grupo");
+        id=sc.nextLine();
+        System.out.println("Desea agregar la lista de alumnos? 1)SI 2)NO");
+        op=sc.nextInt();
+        sc.nextLine();
+        if(op==1){
+            List <Alumno> listaDeAlumnos = new ArrayList<Alumno>();
+            do{
+                listaDeAlumnos.add(Alumno.registrarAlumno());
+                System.out.println("\nDesea registrar otro alumno? 1)SI 2)NO");
+                op1=sc.nextInt();
+                sc.nextLine();
+            } while(op1==1); 
+            System.out.println("\nDesea agregar la lista de materias? 1)SI 2)NO");
+            op2=sc.nextInt();
+            sc.nextLine();
+            if(op2==1){
+                List <Asignatura> listaDeAsignaturas = new ArrayList<Asignatura>();
+                do{
+                    listaDeAsignaturas.add(Asignatura.registrarAsignatura());
+                    System.out.println("\nDesea registrar otra asignatura? 1)SI 2)NO");
+                    op1=sc.nextInt();
+                    sc.nextLine();
+                } while(op1==1); 
+                grupo=new Grupo(id, listaDeAlumnos, listaDeAsignaturas);
+            }
+            else{
+                grupo=new Grupo(id, listaDeAlumnos);
+            }
+        }
+        else{
+            grupo=new Grupo(id);
+        }
+        return grupo;
+    }
+    
 
-    public void imprimirInformacionGrupo(){
-        
+    public String toString(){
+        return "";
     }
     
 }

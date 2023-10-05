@@ -8,13 +8,22 @@ public class Asignatura {
     private Profesor profesor;
     private List<Float> calificaciones= new ArrayList<Float>();
     private String temas;
-    private int claveAsignaturas;
+    private int claveAsignatura;
     private float promedioAsignatura;
     static int numAsignaturas;
      
-    public Asignatura(String nombreAsignatura, Profesor profesor){
+    public Asignatura(String nombreAsignatura, Profesor profesor, int claveAsignatura){
         this.nombreAsignatura=nombreAsignatura;
         this.profesor=profesor;
+        this.claveAsignatura=claveAsignatura;
+        numAsignaturas++;
+    }
+
+    public Asignatura(String nombreAsignatura, Profesor profesor, String temas, int claveAsignatura){
+        this.nombreAsignatura=nombreAsignatura;
+        this.profesor=profesor;
+        this.temas=temas;
+        this.claveAsignatura=claveAsignatura;
         numAsignaturas++;
     }
 
@@ -47,11 +56,11 @@ public class Asignatura {
     }
 
     public int getClaveAsignaturas() {
-        return claveAsignaturas;
+        return claveAsignatura;
     }
 
     public void setClaveAsignaturas(int claveAsignaturas) {
-        this.claveAsignaturas = claveAsignaturas;
+        this.claveAsignatura = claveAsignaturas;
     }
 
     public float getPromedioAsignatura() {
@@ -74,5 +83,31 @@ public class Asignatura {
         actualizarPromedioAsignatura();
     }
 
+    public static Asignatura registrarAsignatura(){
+        Scanner sc=new Scanner(System.in);
+        int op=0;
+        String nombre, temas;
+        int clave;
+        Asignatura asignatura;
+        System.out.println("Ingrese nombre de asignatura");
+        nombre=sc.nextLine();
+        System.out.println("Ingrese la clave de asignatura");
+        clave=sc.nextInt();
+        sc.nextLine();
+        System.out.println("Ingrese la informacion del profesor");
+        Profesor profesor=Profesor.registrarProfesor();
+        System.out.println("Desea agregar los temas de la asignatura? 1)SI 2)NO");
+        op=sc.nextInt();
+        sc.nextLine();
+        if(op==1){
+            System.out.println("Ingrese los temas");
+            temas=sc.nextLine();
+            asignatura=new Asignatura(nombre, profesor, temas, clave);
+        }
+        else{
+            asignatura=new Asignatura(nombre, profesor, clave);
+        }
+        return asignatura;
+    }
 
 }
