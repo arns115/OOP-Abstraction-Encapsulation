@@ -26,8 +26,14 @@ public class Alumno {
     public int getEdad(){
         return this.Edad;
     }
+    public void setEdad(int edad) {
+        Edad = edad;
+    }
     public float getPromedio(){
         return this.Promedio;
+    }
+    public void setPromedio(float promedio) {
+        Promedio = promedio;
     }
     public int getNumeroAlumnosTotales(){
         return AlumnosTotales;
@@ -38,6 +44,7 @@ public class Alumno {
     public int getNumeroLista(){
         return this.numeroDeLista;
     }
+
 
     public static Alumno registrarAlumno(){
         Scanner sc =new Scanner(System.in);
@@ -53,5 +60,17 @@ public class Alumno {
         sc.nextLine();
         Alumno alumno=new Alumno(nombre, apellido, edad);
         return alumno;
+    }
+
+
+    public void modificarAlumno(){
+        Scanner sc=new Scanner(System.in);
+        int op, edad;
+        System.out.println("El alumno ha cumplido anios? 1)SI 2)NO");
+        op=sc.nextInt();
+        sc.nextLine();
+        if(op==1){
+            setEdad(getEdad()+1);
+        }
     }
 }

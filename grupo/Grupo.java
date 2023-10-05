@@ -13,15 +13,17 @@ public class Grupo {
     static int numGrupos;
     static int promedioEscuela;
 
-    public Grupo(String identificadorGrupo, List <Alumno> listaAlumnos, List<Asignatura> materias){
+    public Grupo(String identificadorGrupo, List <Alumno> listaAlumnos, List<Asignatura> materias, int numAlumnos){
         this.identificadorGrupo=identificadorGrupo;
         this.listaAlumnos=listaAlumnos;
         this.materias=materias;
+        this.numAlumnos=numAlumnos;
         numGrupos++;
     }
-    public Grupo(String identificadorGrupo, List<Alumno> listaAlumnos){
+    public Grupo(String identificadorGrupo, List<Alumno> listaAlumnos, int numAlumnos){
         this.identificadorGrupo=identificadorGrupo;
         this.listaAlumnos=listaAlumnos;
+        this.numAlumnos=numAlumnos;
         numGrupos++;
     }
     public Grupo(String identificadorGrupo){
@@ -127,6 +129,7 @@ public class Grupo {
         Grupo grupo;
         int op=0, op1=0, op2=0;
         String id;
+        int numAlumnos=0;
         System.out.println("Ingrese el identificador del grupo");
         id=sc.nextLine();
         System.out.println("Desea agregar la lista de alumnos? 1)SI 2)NO");
@@ -136,6 +139,8 @@ public class Grupo {
             List <Alumno> listaDeAlumnos = new ArrayList<Alumno>();
             do{
                 listaDeAlumnos.add(Alumno.registrarAlumno());
+                listaDeAlumnos.get(numAlumnos).setNumeroLista(numAlumnos);
+                numAlumnos++;
                 System.out.println("\nDesea registrar otro alumno? 1)SI 2)NO");
                 op1=sc.nextInt();
                 sc.nextLine();
@@ -151,10 +156,10 @@ public class Grupo {
                     op1=sc.nextInt();
                     sc.nextLine();
                 } while(op1==1); 
-                grupo=new Grupo(id, listaDeAlumnos, listaDeAsignaturas);
+                grupo=new Grupo(id, listaDeAlumnos, listaDeAsignaturas, numAlumnos);
             }
             else{
-                grupo=new Grupo(id, listaDeAlumnos);
+                grupo=new Grupo(id, listaDeAlumnos, numAlumnos);
             }
         }
         else{
@@ -163,6 +168,84 @@ public class Grupo {
         return grupo;
     }
     
+    public void modificarGrupo(){
+        Scanner sc=new Scanner(System.in);
+        int op=0, i=0, index, op1=0;
+        System.out.println("Que desea modificar?");
+        while(op!=5){
+            System.out.println("1)Agregar alumno\n2)Modificar alumno\n3)Agregar asignatura\n"+
+            "4)Modificar asignatura\n5)Salir\n");
+            op=sc.nextInt();
+            sc.nextLine();
+            switch(op){
+                case 1:
+                    Alumno alumno =Alumno.registrarAlumno();
+                    alumno.setNumeroLista(getNumAlumnos());
+                    setNumAlumnos(getNumAlumnos()+1);
+                    listaAlumnos.add(alumno);
+                    for (Asignatura asignatura1: getMaterias()){
+                        asignatura1.getCalificaciones().add(0.0f);
+                    }
+                    break;
+                case 2:
+                    System.out.println("Que alumno quiere modificar? Ingrese numero de lista");
+                    i=0;
+                    for (Alumno alum: listaAlumnos){
+                        System.out.println(i + " ------> " +alum);
+                    }
+                    index=sc.nextInt();
+                    sc.nextLine();
+                    if(index>=getNumAlumnos()){
+                        System.out.println("Alumno no existe");
+                    }
+                    else{
+                        listaAlumnos.get(index).modificarAlumno();
+                        System.out.println("Desea modificar sus calificaciones? 1)SI 2)NO");
+                        op1=sc.nextInt();
+                        sc.nextLine();
+                        int numLista=listaAlumnos.get(index).getNumeroLista();
+                        float nueva;
+                        if(op1==1){
+                            for (Asignatura asignatura3: getMaterias()){
+                                System.out.println(asignatura3+ "Promedio alumno: "+ 
+                                                    asignatura3.getCalificaciones().get(numLista));
+                                System.out.println("Ingrese nueva calificacion de la materia");
+                                nueva=sc.nextFloat();
+                                sc.nextLine();
+                                asignatura3.modificarCalificacion(numLista, nueva);
+                            }
+                        }
+                    }
+                    break;
+                case 3:
+                    Asignatura asignatura=Asignatura.registrarAsignatura();
+                    for (int j=0;j<getNumAlumnos();j++){
+                        asignatura.getCalificaciones().add(0.0f);
+                    }  
+                    break;
+                case 4:
+                    System.out.println("Que asignatura quiere modificar? - Ingrese indice");
+                    i=0;
+                    for (Asignatura asignatura2: getMaterias()){
+                        System.out.println(i+ " ------> "+ asignatura2);
+                    }
+                    index=sc.nextInt();
+                    sc.nextLine();
+                    if(index>=getMaterias().size()){
+                        System.out.println("Materia no existe");
+                    }
+                    else{
+                        materias.get(index).modificarAsignatura();
+                    }
+                    break;
+                case 5:
+                    continue;
+                default:
+                    System.out.println("Opcion no disponible");
+            }
+
+        } 
+    }
 
     public String toString(){
         return "";

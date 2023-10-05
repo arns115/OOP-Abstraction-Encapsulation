@@ -43,9 +43,6 @@ public class Asignatura {
         return calificaciones;
     }
 
-    public void setCalificaciones(List<Float> calificaciones) {
-        this.calificaciones = calificaciones;
-    }
 
     public String getTemas() {
         return temas;
@@ -83,6 +80,13 @@ public class Asignatura {
         actualizarPromedioAsignatura();
     }
 
+    public void simularCalificaciones(){
+        for (int i=0;i<getCalificaciones().size();i++){
+            float a=(float)Math.random()*10.0f;
+            modificarCalificacion(i, a);
+        }
+    }
+
     public static Asignatura registrarAsignatura(){
         Scanner sc=new Scanner(System.in);
         int op=0;
@@ -110,4 +114,24 @@ public class Asignatura {
         return asignatura;
     }
 
+    public void modificarAsignatura(){
+        Scanner sc = new Scanner(System.in);
+        int op=0;
+        System.out.println("Que informacion desea modificar?");
+        System.out.println("1) Temas de asignatura\n2) Informacion del profesor\n");
+        op=sc.nextInt();
+        sc.nextLine();
+        switch(op){
+            case 1:
+                System.out.println("Ingrese nuevo temario de la asignatura");
+                String nuevosTemas=sc.nextLine();
+                setTemas(nuevosTemas);
+                break;
+            case 2:
+                getProfesor().modificarProfesor();
+                break;
+            default:
+                System.out.println("Opcion no disponible");
+        }
+    }
 }
