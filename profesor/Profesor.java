@@ -96,14 +96,15 @@ public class Profesor {
         Scanner sc=new Scanner(System.in);
         int op=0;
         String nombre, apellido;
-        int edad, calificacionAprobatoria;
+        int edad;
+        float calificacionAprobatoria;
         Profesor profesor;
         System.out.println("Ingrese nombre del profesor");
         nombre=sc.nextLine();
         System.out.println("Ingrese apellido del profesor");
         apellido=sc.nextLine();
         System.out.println("Ingrese calificacion aprobatoria del profesor");
-        calificacionAprobatoria=sc.nextInt();
+        calificacionAprobatoria=sc.nextFloat();
         sc.nextLine();
         System.out.println("Desea agregar la edad del profesor? 1)SI 2)NO");
         op=sc.nextInt();
@@ -137,5 +138,9 @@ public class Profesor {
             sc.nextLine();
             setCalificacionAprobatoria(nuevaCalifAprobatoria);
         }
+    }
+
+    public String toString(){
+        return "Profesor: "+getNombre()+ " ->Calificacion aprobatoria: "+ getCalificacionAprobatoria();
     }
 }

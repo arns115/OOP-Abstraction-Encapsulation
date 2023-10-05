@@ -11,7 +11,7 @@ public class Grupo {
     private List<Alumno> listaAlumnos=new ArrayList<Alumno>();
     private List<Asignatura> materias =new ArrayList<Asignatura>();
     static int numGrupos;
-    static int promedioEscuela;
+    static float promedioEscuela;
 
     public Grupo(String identificadorGrupo, List <Alumno> listaAlumnos, List<Asignatura> materias, int numAlumnos){
         this.identificadorGrupo=identificadorGrupo;
@@ -67,7 +67,7 @@ public class Grupo {
         this.materias = materias;
     }
 
-    public static int getPromedioEscuela() {
+    public static float getPromedioEscuela() {
         return promedioEscuela;
     }
 
@@ -79,7 +79,7 @@ public class Grupo {
 
     public void actualizarPromedioGrupo(){
         float a=getPromedioGrupo();
-        setPromedioGrupo(promedioGrupo);
+        setPromedioGrupo(0.0f);
         for (Asignatura asignatura: getMaterias()){
             setPromedioGrupo(getPromedioGrupo()+(asignatura.getPromedioAsignatura()/getMaterias().size()));
         }
@@ -141,18 +141,23 @@ public class Grupo {
                 listaDeAlumnos.add(Alumno.registrarAlumno());
                 listaDeAlumnos.get(numAlumnos).setNumeroLista(numAlumnos);
                 numAlumnos++;
-                System.out.println("\nDesea registrar otro alumno? 1)SI 2)NO");
+                System.out.println("Desea registrar otro alumno? 1)SI 2)NO");
                 op1=sc.nextInt();
                 sc.nextLine();
             } while(op1==1); 
-            System.out.println("\nDesea agregar la lista de materias? 1)SI 2)NO");
+            System.out.println("Desea agregar la lista de materias? 1)SI 2)NO");
             op2=sc.nextInt();
             sc.nextLine();
             if(op2==1){
                 List <Asignatura> listaDeAsignaturas = new ArrayList<Asignatura>();
+                List<Float> listCalificaciones=new ArrayList<Float>();
+                for (int i=0;i<numAlumnos;i++){
+                    listCalificaciones.add(0.0f);
+                }
                 do{
-                    listaDeAsignaturas.add(Asignatura.registrarAsignatura());
-                    System.out.println("\nDesea registrar otra asignatura? 1)SI 2)NO");
+                    Asignatura materia1=Asignatura.registrarAsignatura(listCalificaciones);
+                    listaDeAsignaturas.add(materia1);
+                    System.out.println("Desea registrar otra asignatura? 1)SI 2)NO");
                     op1=sc.nextInt();
                     sc.nextLine();
                 } while(op1==1); 
@@ -161,7 +166,7 @@ public class Grupo {
             else{
                 grupo=new Grupo(id, listaDeAlumnos, numAlumnos);
             }
-        }
+        } 
         else{
             grupo=new Grupo(id);
         }
@@ -174,7 +179,7 @@ public class Grupo {
         System.out.println("Que desea modificar?");
         while(op!=5){
             System.out.println("1)Agregar alumno\n2)Modificar alumno\n3)Agregar asignatura\n"+
-            "4)Modificar asignatura\n5)Salir\n");
+            "4)Modificar asignatura\n5)Salir");
             op=sc.nextInt();
             sc.nextLine();
             switch(op){
@@ -218,10 +223,12 @@ public class Grupo {
                     }
                     break;
                 case 3:
-                    Asignatura asignatura=Asignatura.registrarAsignatura();
-                    for (int j=0;j<getNumAlumnos();j++){
-                        asignatura.getCalificaciones().add(0.0f);
-                    }  
+                    List<Float> listCalificaciones1=new ArrayList<Float>();
+                    for (int j=0;j<numAlumnos;j++){
+                        listCalificaciones1.add(0.0f);
+                    }
+                    Asignatura asignatura1=Asignatura.registrarAsignatura(listCalificaciones1);
+                    agregarAsignatura(asignatura1);
                     break;
                 case 4:
                     System.out.println("Que asignatura quiere modificar? - Ingrese indice");
@@ -248,22 +255,25 @@ public class Grupo {
     }
 
     public String toString(){
-        StringBuilder str=new StringBuilder(1000);
-        str.append("Identificador Grupo: " +getIdentificadorGrupo()+"\n");
-        str.append("Materias: \n");
+        StringBuilder str1=new StringBuilder(1000);
+        str1.append("Identificador Grupo: " +getIdentificadorGrupo()+"\n");
+        str1.append("MATERIAS: \n#########################\n");
         for (Asignatura asignatura:getMaterias()){
-            str.append(asignatura.getNombreAsignatura()+"\n");
-            str.append("Clave: "+asignatura.getClaveAsignaturas()+'\n');
+            str1.append(asignatura.getNombreAsignatura()+"\n");
+            str1.append("Clave: "+asignatura.getClaveAsignaturas()+'\n');
             if(asignatura.getTemas()!=null){
-                str.append("Temas: "+asignatura.getTemas()+"\n");
+                str1.append("Temas: "+asignatura.getTemas()+"\n");
             }
-            str.append("Calificaciones: \n");
-            for (int j=0;j<getNumAlumnos();j++){
-                System.out.println(getListaAlumno().get(j)+": "+ asignatura.getCalificaciones().get(j)+"\n");
+            str1.append(asignatura.getProfesor()+"\n");
+            str1.append("Calificaciones: \n");
+            for (int m=0;m<getNumAlumnos();m++){
+                str1.append(getListaAlumno().get(m)+": "+ asignatura.getCalificaciones().get(m)+"\n");
             }
-            str.append("\nPromedio general de la asignatura: "+ asignatura.getPromedioAsignatura()+"\n");
+            str1.append("\nPromedio general de la asignatura: "+ asignatura.getPromedioAsignatura()+"\n");
+            str1.append("Numero de alumnos aprobados: "+ asignatura.getProfesor().AlumnosAprobados(asignatura.getCalificaciones())+"\n");
+            str1.append("Numero de alumnos reprobados: "+ asignatura.getProfesor().AlumnosReprobados(asignatura.getCalificaciones())+"\n");
         }
-        str.append("\nPromedio general del grupo: "+ getPromedioGrupo());
-        return str.toString();
+        str1.append("\nPromedio general del grupo: "+ getPromedioGrupo()+"\n");
+        return str1.toString();
     }
 }

@@ -12,18 +12,20 @@ public class Asignatura {
     private float promedioAsignatura;
     private static int numAsignaturas;
      
-    public Asignatura(String nombreAsignatura, Profesor profesor, int claveAsignatura){
+    public Asignatura(String nombreAsignatura, Profesor profesor, int claveAsignatura, List<Float> l1){
         this.nombreAsignatura=nombreAsignatura;
         this.profesor=profesor;
         this.claveAsignatura=claveAsignatura;
+        this.calificaciones=l1; 
         numAsignaturas++;
     }
 
-    public Asignatura(String nombreAsignatura, Profesor profesor, String temas, int claveAsignatura){
+    public Asignatura(String nombreAsignatura, Profesor profesor, String temas, int claveAsignatura, List<Float> l1){
         this.nombreAsignatura=nombreAsignatura;
         this.profesor=profesor;
         this.temas=temas;
         this.claveAsignatura=claveAsignatura;
+        this.calificaciones=l1;
         numAsignaturas++;
     }
 
@@ -78,19 +80,19 @@ public class Asignatura {
         }
     }
 
-    public void modificarCalificacion(int index, float calificacion){
+    public void modificarCalificacion(int index, Float calificacion){
         calificaciones.set(index, calificacion);
         actualizarPromedioAsignatura();
     }
 
     public void simularCalificaciones(){
         for (int i=0;i<getCalificaciones().size();i++){
-            float a=(float)Math.random()*10.0f;
+            Float a=(float)Math.random()*10.0f;
             modificarCalificacion(i, a);
         }
     }
 
-    public static Asignatura registrarAsignatura(){
+    public static Asignatura registrarAsignatura(List<Float> listaCalif){
         Scanner sc=new Scanner(System.in);
         int op=0;
         String nombre, temas;
@@ -109,10 +111,10 @@ public class Asignatura {
         if(op==1){
             System.out.println("Ingrese los temas");
             temas=sc.nextLine();
-            asignatura=new Asignatura(nombre, profesor, temas, clave);
+            asignatura=new Asignatura(nombre, profesor, temas, clave, listaCalif);
         }
         else{
-            asignatura=new Asignatura(nombre, profesor, clave);
+            asignatura=new Asignatura(nombre, profesor, clave, listaCalif);
         }
         return asignatura;
     }

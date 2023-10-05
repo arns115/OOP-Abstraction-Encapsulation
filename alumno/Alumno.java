@@ -74,6 +74,6 @@ public class Alumno {
     }
 
     public String toString(){
-        return "Numero de lista: "+getNumeroLista()+"->Nombre: "+getNombre();
+        return "Numero de lista: "+getNumeroLista()+"->Nombre: "+getNombre()+"->";
     }
 }
