@@ -82,7 +82,6 @@ public class Asignatura {
 
     public void modificarCalificacion(int index, Float calificacion){
         calificaciones.set(index, calificacion);
-        actualizarPromedioAsignatura();
     }
 
     public void simularCalificaciones(){

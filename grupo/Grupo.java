@@ -90,38 +90,9 @@ public class Grupo {
         listaAlumnos.add(alumno);
     }
 
-    public void eliminarAlumno(int index){
-        listaAlumnos.remove(index);
-    }
-
-    public void eliminarAlumno(String nombre){
-        int i=0;
-        for (Alumno alumno1:getListaAlumno()){
-            if (alumno1.getNombre()==nombre){
-                listaAlumnos.remove(i);
-                break;
-            }
-            i++;
-        }
-    }
 
     public void agregarAsignatura(Asignatura asignatura){
         materias.add(asignatura);
-    }
-
-    public void eliminarAsignatura(int index){
-        materias.remove(index);
-    }
-
-    public void eliminarAsignatura(String nombreAsignatura){
-        int i=0;
-        for (Asignatura asignatura:getMaterias()){
-            if(asignatura.getNombreAsignatura()==nombreAsignatura){
-                materias.remove(i);
-                break;
-            }
-            i++;
-        }
     }
     
     public static Grupo registrarGrupo(){
@@ -211,14 +182,19 @@ public class Grupo {
                         int numLista=listaAlumnos.get(index).getNumeroLista();
                         float nueva;
                         if(op1==1){
+                            Float nuevoPromedioAlumno=0.0f;
                             for (Asignatura asignatura3: getMaterias()){
-                                System.out.println(asignatura3+ "Promedio alumno: "+ 
+                                System.out.println(asignatura3.getNombreAsignatura()+ "Promedio alumno: "+ 
                                                     asignatura3.getCalificaciones().get(numLista));
                                 System.out.println("Ingrese nueva calificacion de la materia");
                                 nueva=sc.nextFloat();
                                 sc.nextLine();
+                                nuevoPromedioAlumno+=nueva;
                                 asignatura3.modificarCalificacion(numLista, nueva);
+                                asignatura3.actualizarPromedioAsignatura();
                             }
+                            actualizarPromedioGrupo();
+                            listaAlumnos.get(index).setPromedio(nuevoPromedioAlumno/getMaterias().size());
                         }
                     }
                     break;

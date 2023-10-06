@@ -27,6 +27,7 @@ public class Principal {
                     indice1=0;
                     for (Grupo grupo1: grupos){
                         System.out.println(indice1+ " -----> "+grupo1.getIdentificadorGrupo());
+                        indice1++;
                     }
                     indice2=sc.nextInt();
                     sc.nextLine();
@@ -37,12 +38,14 @@ public class Principal {
                     indice1=0;
                     for (Grupo grupo1: grupos){
                         System.out.println(indice1+ " -----> "+grupo1.getIdentificadorGrupo());
+                        indice1++;
                     }
                     indice2=sc.nextInt();
                     sc.nextLine();
                     if(indice2<grupos.size()){
                         for (Asignatura asignatura:grupos.get(indice2).getMaterias()){
                             asignatura.simularCalificaciones();
+                            asignatura.actualizarPromedioAsignatura();
                         }
                         grupos.get(indice2).actualizarPromedioGrupo();
                         for (int indiceAlumno=0;indiceAlumno<(grupos.get(indice2)).getNumAlumnos();indiceAlumno++){
@@ -66,6 +69,7 @@ public class Principal {
                     indice1=0;
                     for (Grupo grupo1: grupos){
                         System.out.println(indice1+ " -----> Grupo: "+grupo1.getIdentificadorGrupo());
+                        indice1++;
                     }
                     indice2=sc.nextInt();
                     sc.nextLine();
